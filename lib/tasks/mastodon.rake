@@ -6,6 +6,7 @@ namespace :mastodon do
   desc 'Configure the instance for production use'
   task :setup do
     prompt = TTY::Prompt.new
+    # config = YAML.load_file(File.join(__dir__, 'mice_config.yml')) #uncomment later to read from YAML
     env    = {}
 
     # When the application code gets loaded, it runs `lib/mastodon/redis_configuration.rb`.
@@ -16,19 +17,22 @@ namespace :mastodon do
     ENV.delete('CACHE_REDIS_URL')
     ENV.delete('SIDEKIQ_REDIS_URL')
 
+    env['LOCAL_DOMAIN'] = 'z.argyle.systems' #config['local_domain']
+    env['SINGLE_USER_MODE'] = 'false'
+
     begin
-      prompt.say('Your instance is identified by its domain name. Changing it afterward will break things.')
-      env['LOCAL_DOMAIN'] = prompt.ask('Domain name:') do |q|
-        q.required true
-        q.modify :strip
-        q.validate(/\A[a-z0-9\.\-]+\z/i)
-        q.messages[:valid?] = 'Invalid domain. If you intend to use unicode characters, enter punycode here'
-      end
+      #prompt.say('Your instance is identified by its domain name. Changing it afterward will break things.')
+      #env['LOCAL_DOMAIN'] = prompt.ask('Domain name:') do |q|
+      #  q.required true
+      #  q.modify :strip
+      #  q.validate(/\A[a-z0-9\.\-]+\z/i)
+      #  q.messages[:valid?] = 'Invalid domain. If you intend to use unicode characters, enter punycode here'
+      #end
 
-      prompt.say "\n"
+      #prompt.say "\n"
 
-      prompt.say('Single user mode disables registrations and redirects the landing page to your public profile.')
-      env['SINGLE_USER_MODE'] = prompt.yes?('Do you want to enable single user mode?', default: false)
+      #prompt.say('Single user mode disables registrations and redirects the landing page to your public profile.')
+      #env['SINGLE_USER_MODE'] = prompt.yes?('Do you want to enable single user mode?', default: false)
 
       %w(SECRET_KEY_BASE OTP_SECRET).each do |key|
         env[key] = SecureRandom.hex(64)
