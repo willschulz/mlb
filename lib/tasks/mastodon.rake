@@ -34,13 +34,13 @@ namespace :mastodon do
     #env['REDIS_PASSWORD'] = config['redis_password']
 
     begin
-      prompt.say('Your instance is identified by its domain name. Changing it afterward will break things.')
-      env['LOCAL_DOMAIN'] = prompt.ask('Domain name:') do |q|
-       q.required true
-       q.modify :strip
-       q.validate(/\A[a-z0-9\.\-]+\z/i)
-       q.messages[:valid?] = 'Invalid domain. If you intend to use unicode characters, enter punycode here'
-      end
+      #prompt.say('Your instance is identified by its domain name. Changing it afterward will break things.')
+      #env['LOCAL_DOMAIN'] = prompt.ask('Domain name:') do |q|
+      # q.required true
+      # q.modify :strip
+      # q.validate(/\A[a-z0-9\.\-]+\z/i)
+      # q.messages[:valid?] = 'Invalid domain. If you intend to use unicode characters, enter punycode here'
+      #end
 
       prompt.say "\n"
 
