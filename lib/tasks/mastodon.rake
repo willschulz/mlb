@@ -19,7 +19,6 @@ namespace :mastodon do
 
     env['LOCAL_DOMAIN'] = config['local_domain']
     puts "Local domain set to: #{env['LOCAL_DOMAIN']}"
-    #env['LOCAL_DOMAIN'] = 'b.argyle.systems' #config['local_domain']
     env['SINGLE_USER_MODE'] = false
     using_docker = false
 
@@ -27,11 +26,11 @@ namespace :mastodon do
     env['DB_PORT'] = 5432
     env['DB_NAME'] = 'mastodon'
     env['DB_USER'] = 'mastodon'
-    #env['DB_PASS'] = config['db_password']
+    env['DB_PASS'] = config['db_password']
 
-    env['REDIS_HOST'] = '127.0.0.1' #config['redis_host']
-    env['REDIS_PORT'] = 6379 #config['redis_port'].to_s
-    #env['REDIS_PASSWORD'] = config['redis_password']
+    env['REDIS_HOST'] = '127.0.0.1'
+    env['REDIS_PORT'] = 6379
+    #env['REDIS_PASSWORD'] = nil
 
     env['SMTP_FROM_ADDRESS'] = "Mastodon <notifications@#{env['LOCAL_DOMAIN']}>"
 
@@ -39,13 +38,13 @@ namespace :mastodon do
     store_files_in_cloud = false
     send_emails_from_localhost = true
     send_test_email_now = false
-    send_to = "wschulz@princeton.edu"
+    send_to = config['admin_email']
     save_configuration = true
     prepare_database_now = true
     prepare_assets_now = true
     create_admin_user = true
     admin_username = "admin"
-    admin_email = "wschulz@princeton.edu"
+    admin_email = config['admin_email']
 
     begin
       #prompt.say('Your instance is identified by its domain name. Changing it afterward will break things.')
@@ -102,9 +101,9 @@ namespace :mastodon do
         # q.modify :strip
         #end
 
-        env['DB_PASS'] = prompt.ask('Password of PostgreSQL user:') do |q|
-          q.echo false
-        end
+        #env['DB_PASS'] = prompt.ask('Password of PostgreSQL user:') do |q|
+        #  q.echo false
+        #end
 
         # The chosen database may not exist yet. Connect to default database
         # to avoid "database does not exist" error.
