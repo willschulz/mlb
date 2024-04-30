@@ -34,18 +34,18 @@ namespace :mastodon do
     #env['REDIS_PASSWORD'] = config['redis_password']
 
     begin
-      #prompt.say('Your instance is identified by its domain name. Changing it afterward will break things.')
-      #env['LOCAL_DOMAIN'] = prompt.ask('Domain name:') do |q|
-      #  q.required true
-      #  q.modify :strip
-      #  q.validate(/\A[a-z0-9\.\-]+\z/i)
-      #  q.messages[:valid?] = 'Invalid domain. If you intend to use unicode characters, enter punycode here'
-      #end
+      prompt.say('Your instance is identified by its domain name. Changing it afterward will break things.')
+      env['LOCAL_DOMAIN'] = prompt.ask('Domain name:') do |q|
+       q.required true
+       q.modify :strip
+       q.validate(/\A[a-z0-9\.\-]+\z/i)
+       q.messages[:valid?] = 'Invalid domain. If you intend to use unicode characters, enter punycode here'
+      end
 
-      #prompt.say "\n"
+      prompt.say "\n"
 
-      #prompt.say('Single user mode disables registrations and redirects the landing page to your public profile.')
-      #env['SINGLE_USER_MODE'] = prompt.yes?('Do you want to enable single user mode?', default: false)
+      prompt.say('Single user mode disables registrations and redirects the landing page to your public profile.')
+      env['SINGLE_USER_MODE'] = prompt.yes?('Do you want to enable single user mode?', default: false)
 
       %w(SECRET_KEY_BASE OTP_SECRET).each do |key|
         env[key] = SecureRandom.hex(64)
@@ -64,29 +64,29 @@ namespace :mastodon do
       prompt.say "\n"
 
       loop do
-        #env['DB_HOST'] = prompt.ask('PostgreSQL host:') do |q|
-        #  q.required true
-        #  q.default using_docker ? 'db' : '/var/run/postgresql'
-        #  q.modify :strip
-        #end
+        env['DB_HOST'] = prompt.ask('PostgreSQL host:') do |q|
+         q.required true
+         q.default using_docker ? 'db' : '/var/run/postgresql'
+         q.modify :strip
+        end
 
-        #env['DB_PORT'] = prompt.ask('PostgreSQL port:') do |q|
-        #  q.required true
-        #  q.default 5432
-        #  q.convert :int
-        #end
+        env['DB_PORT'] = prompt.ask('PostgreSQL port:') do |q|
+         q.required true
+         q.default 5432
+         q.convert :int
+        end
 
-        #env['DB_NAME'] = prompt.ask('Name of PostgreSQL database:') do |q|
-        #  q.required true
-        #  q.default using_docker ? 'postgres' : 'mastodon_production'
-        #  q.modify :strip
-        #end
+        env['DB_NAME'] = prompt.ask('Name of PostgreSQL database:') do |q|
+         q.required true
+         q.default using_docker ? 'postgres' : 'mastodon_production'
+         q.modify :strip
+        end
 
-        #env['DB_USER'] = prompt.ask('Name of PostgreSQL user:') do |q|
-        #  q.required true
-        #  q.default using_docker ? 'postgres' : 'mastodon'
-        #  q.modify :strip
-        #end
+        env['DB_USER'] = prompt.ask('Name of PostgreSQL user:') do |q|
+         q.required true
+         q.default using_docker ? 'postgres' : 'mastodon'
+         q.modify :strip
+        end
 
         env['DB_PASS'] = prompt.ask('Password of PostgreSQL user:') do |q|
           q.echo false
@@ -119,17 +119,17 @@ namespace :mastodon do
       prompt.say "\n"
 
       loop do
-        #env['REDIS_HOST'] = prompt.ask('Redis host:') do |q|
-        #  q.required true
-        #  q.default using_docker ? 'redis' : 'localhost'
-        #  q.modify :strip
-        #end
+        env['REDIS_HOST'] = prompt.ask('Redis host:') do |q|
+         q.required true
+         q.default using_docker ? 'redis' : 'localhost'
+         q.modify :strip
+        end
 
-        #env['REDIS_PORT'] = prompt.ask('Redis port:') do |q|
-        #  q.required true
-        #  q.default 6379
-        #  q.convert :int
-        #end
+        env['REDIS_PORT'] = prompt.ask('Redis port:') do |q|
+         q.required true
+         q.default 6379
+         q.convert :int
+        end
 
         env['REDIS_PASSWORD'] = prompt.ask('Redis password:') do |q|
           q.required false
