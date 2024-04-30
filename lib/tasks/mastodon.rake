@@ -33,6 +33,9 @@ namespace :mastodon do
     env['REDIS_PORT'] = 6379 #config['redis_port'].to_s
     #env['REDIS_PASSWORD'] = config['redis_password']
 
+    # new logicals:
+    store_files_in_cloud = false
+
     begin
       #prompt.say('Your instance is identified by its domain name. Changing it afterward will break things.')
       #env['LOCAL_DOMAIN'] = prompt.ask('Domain name:') do |q|
@@ -131,11 +134,11 @@ namespace :mastodon do
         # q.convert :int
         #end
 
-        env['REDIS_PASSWORD'] = prompt.ask('Redis password:') do |q|
-          q.required false
-          q.default nil
-          q.modify :strip
-        end
+        #env['REDIS_PASSWORD'] = prompt.ask('Redis password:') do |q|
+        #  q.required false
+        #  q.default nil
+        #  q.modify :strip
+        #end
 
         redis_options = {
           host: env['REDIS_HOST'],
@@ -158,7 +161,8 @@ namespace :mastodon do
 
       prompt.say "\n"
 
-      if prompt.yes?('Do you want to store uploaded files on the cloud?', default: false)
+      #if prompt.yes?('Do you want to store uploaded files on the cloud?', default: false)
+      if store_files_in_cloud
         case prompt.select('Provider', ['DigitalOcean Spaces', 'Amazon S3', 'Wasabi', 'Minio', 'Google Cloud Storage'])
         when 'DigitalOcean Spaces'
           env['S3_ENABLED'] = 'true'
