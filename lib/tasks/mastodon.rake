@@ -510,17 +510,17 @@ namespace :mastodon do
 
           #username = prompt.ask('Username:') do |q|
           username = admin_username
-            q.required true
-            q.default 'admin'
-            q.validate(/\A[a-z0-9_]+\z/i)
-            q.modify :strip
-          end
+          #  q.required true
+          #  q.default 'admin'
+          #  q.validate(/\A[a-z0-9_]+\z/i)
+          #  q.modify :strip
+          #end
 
           #email = prompt.ask('E-mail:') do |q|
           email = admin_email
-            q.required true
-            q.modify :strip
-          end
+          #  q.required true
+          #  q.modify :strip
+          #end
 
           password = SecureRandom.hex(16)
 
