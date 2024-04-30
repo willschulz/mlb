@@ -29,6 +29,10 @@ namespace :mastodon do
     env['DB_USER'] = 'mastodon'
     #env['DB_PASS'] = config['db_password']
 
+    env['REDIS_HOST'] = '127.0.0.1' #config['redis_host']
+    env['REDIS_PORT'] = '6379' #config['redis_port'].to_s
+    #env['REDIS_PASSWORD'] = config['redis_password']
+
     begin
       #prompt.say('Your instance is identified by its domain name. Changing it afterward will break things.')
       #env['LOCAL_DOMAIN'] = prompt.ask('Domain name:') do |q|
@@ -115,17 +119,17 @@ namespace :mastodon do
       prompt.say "\n"
 
       loop do
-        env['REDIS_HOST'] = prompt.ask('Redis host:') do |q|
-          q.required true
-          q.default using_docker ? 'redis' : 'localhost'
-          q.modify :strip
-        end
+        #env['REDIS_HOST'] = prompt.ask('Redis host:') do |q|
+        #  q.required true
+        #  q.default using_docker ? 'redis' : 'localhost'
+        #  q.modify :strip
+        #end
 
-        env['REDIS_PORT'] = prompt.ask('Redis port:') do |q|
-          q.required true
-          q.default 6379
-          q.convert :int
-        end
+        #env['REDIS_PORT'] = prompt.ask('Redis port:') do |q|
+        #  q.required true
+        #  q.default 6379
+        #  q.convert :int
+        #end
 
         env['REDIS_PASSWORD'] = prompt.ask('Redis password:') do |q|
           q.required false
