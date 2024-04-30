@@ -17,8 +17,17 @@ namespace :mastodon do
     ENV.delete('CACHE_REDIS_URL')
     ENV.delete('SIDEKIQ_REDIS_URL')
 
+    env['LOCAL_DOMAIN'] = config['local_domain']
+    puts "Local domain set to: #{env['LOCAL_DOMAIN']}"
     env['LOCAL_DOMAIN'] = 'z.argyle.systems' #config['local_domain']
     env['SINGLE_USER_MODE'] = 'false'
+    using_docker = 'false'
+
+    env['DB_HOST'] = '127.0.0.1'
+    env['DB_PORT'] = '5432'
+    env['DB_NAME'] = 'mastodon'
+    env['DB_USER'] = 'mastodon'
+    #env['DB_PASS'] = config['db_password']
 
     begin
       #prompt.say('Your instance is identified by its domain name. Changing it afterward will break things.')
@@ -45,35 +54,35 @@ namespace :mastodon do
 
       prompt.say "\n"
 
-      using_docker        = prompt.yes?('Are you using Docker to run Mastodon?')
+      #using_docker        = prompt.yes?('Are you using Docker to run Mastodon?')
       db_connection_works = false
 
       prompt.say "\n"
 
       loop do
-        env['DB_HOST'] = prompt.ask('PostgreSQL host:') do |q|
-          q.required true
-          q.default using_docker ? 'db' : '/var/run/postgresql'
-          q.modify :strip
-        end
+        #env['DB_HOST'] = prompt.ask('PostgreSQL host:') do |q|
+        #  q.required true
+        #  q.default using_docker ? 'db' : '/var/run/postgresql'
+        #  q.modify :strip
+        #end
 
-        env['DB_PORT'] = prompt.ask('PostgreSQL port:') do |q|
-          q.required true
-          q.default 5432
-          q.convert :int
-        end
+        #env['DB_PORT'] = prompt.ask('PostgreSQL port:') do |q|
+        #  q.required true
+        #  q.default 5432
+        #  q.convert :int
+        #end
 
-        env['DB_NAME'] = prompt.ask('Name of PostgreSQL database:') do |q|
-          q.required true
-          q.default using_docker ? 'postgres' : 'mastodon_production'
-          q.modify :strip
-        end
+        #env['DB_NAME'] = prompt.ask('Name of PostgreSQL database:') do |q|
+        #  q.required true
+        #  q.default using_docker ? 'postgres' : 'mastodon_production'
+        #  q.modify :strip
+        #end
 
-        env['DB_USER'] = prompt.ask('Name of PostgreSQL user:') do |q|
-          q.required true
-          q.default using_docker ? 'postgres' : 'mastodon'
-          q.modify :strip
-        end
+        #env['DB_USER'] = prompt.ask('Name of PostgreSQL user:') do |q|
+        #  q.required true
+        #  q.default using_docker ? 'postgres' : 'mastodon'
+        #  q.modify :strip
+        #end
 
         env['DB_PASS'] = prompt.ask('Password of PostgreSQL user:') do |q|
           q.echo false
