@@ -20,8 +20,8 @@ namespace :mastodon do
     env['LOCAL_DOMAIN'] = config['local_domain']
     puts "Local domain set to: #{env['LOCAL_DOMAIN']}"
     env['LOCAL_DOMAIN'] = 'z.argyle.systems' #config['local_domain']
-    env['SINGLE_USER_MODE'] = 'false'
-    using_docker = 'false'
+    env['SINGLE_USER_MODE'] = false
+    using_docker = false
 
     env['DB_HOST'] = '127.0.0.1'
     env['DB_PORT'] = '5432'
