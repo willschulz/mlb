@@ -24,13 +24,13 @@ namespace :mastodon do
     using_docker = false
 
     env['DB_HOST'] = '127.0.0.1'
-    env['DB_PORT'] = '5432'
+    env['DB_PORT'] = 5432
     env['DB_NAME'] = 'mastodon'
     env['DB_USER'] = 'mastodon'
     #env['DB_PASS'] = config['db_password']
 
     env['REDIS_HOST'] = '127.0.0.1' #config['redis_host']
-    env['REDIS_PORT'] = '6379' #config['redis_port'].to_s
+    env['REDIS_PORT'] = 6379 #config['redis_port'].to_s
     #env['REDIS_PASSWORD'] = config['redis_password']
 
     begin
