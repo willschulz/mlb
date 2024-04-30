@@ -6,7 +6,7 @@ namespace :mastodon do
   desc 'Configure the instance for production use'
   task :setup do
     prompt = TTY::Prompt.new
-    # config = YAML.load_file(File.join(__dir__, 'mice_config.yml')) #uncomment later to read from YAML
+    config = YAML.load_file(File.join(__dir__, 'mice_config.yml')) #uncomment later to read from YAML
     env    = {}
 
     # When the application code gets loaded, it runs `lib/mastodon/redis_configuration.rb`.
