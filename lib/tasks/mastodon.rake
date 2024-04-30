@@ -76,17 +76,17 @@ namespace :mastodon do
          q.convert :int
         end
 
-        env['DB_NAME'] = prompt.ask('Name of PostgreSQL database:') do |q|
-         q.required true
-         q.default using_docker ? 'postgres' : 'mastodon_production'
-         q.modify :strip
-        end
+        #env['DB_NAME'] = prompt.ask('Name of PostgreSQL database:') do |q|
+        # q.required true
+        # q.default using_docker ? 'postgres' : 'mastodon_production'
+        # q.modify :strip
+        #end
 
-        env['DB_USER'] = prompt.ask('Name of PostgreSQL user:') do |q|
-         q.required true
-         q.default using_docker ? 'postgres' : 'mastodon'
-         q.modify :strip
-        end
+        #env['DB_USER'] = prompt.ask('Name of PostgreSQL user:') do |q|
+        # q.required true
+        # q.default using_docker ? 'postgres' : 'mastodon'
+        # q.modify :strip
+        #end
 
         env['DB_PASS'] = prompt.ask('Password of PostgreSQL user:') do |q|
           q.echo false
