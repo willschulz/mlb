@@ -64,17 +64,17 @@ namespace :mastodon do
       prompt.say "\n"
 
       loop do
-        env['DB_HOST'] = prompt.ask('PostgreSQL host:') do |q|
-         q.required true
-         q.default using_docker ? 'db' : '/var/run/postgresql'
-         q.modify :strip
-        end
+        #env['DB_HOST'] = prompt.ask('PostgreSQL host:') do |q|
+        # q.required true
+        # q.default using_docker ? 'db' : '/var/run/postgresql'
+        # q.modify :strip
+        #end
 
-        env['DB_PORT'] = prompt.ask('PostgreSQL port:') do |q|
-         q.required true
-         q.default 5432
-         q.convert :int
-        end
+        #env['DB_PORT'] = prompt.ask('PostgreSQL port:') do |q|
+        # q.required true
+        # q.default 5432
+        # q.convert :int
+        #end
 
         #env['DB_NAME'] = prompt.ask('Name of PostgreSQL database:') do |q|
         # q.required true
@@ -119,17 +119,17 @@ namespace :mastodon do
       prompt.say "\n"
 
       loop do
-        env['REDIS_HOST'] = prompt.ask('Redis host:') do |q|
-         q.required true
-         q.default using_docker ? 'redis' : 'localhost'
-         q.modify :strip
-        end
+        #env['REDIS_HOST'] = prompt.ask('Redis host:') do |q|
+        # q.required true
+        # q.default using_docker ? 'redis' : 'localhost'
+        # q.modify :strip
+        #end
 
-        env['REDIS_PORT'] = prompt.ask('Redis port:') do |q|
-         q.required true
-         q.default 6379
-         q.convert :int
-        end
+        #env['REDIS_PORT'] = prompt.ask('Redis port:') do |q|
+        # q.required true
+        # q.default 6379
+        # q.convert :int
+        #end
 
         env['REDIS_PASSWORD'] = prompt.ask('Redis password:') do |q|
           q.required false
