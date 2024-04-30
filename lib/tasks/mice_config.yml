@@ -1,0 +1,12 @@
+local_domain: "example.com"
+email: "admin@example.com"
+secret_key_base: "someverylongrandomstring"
+otp_secret: "anotherlongrandomstring"
+vapid_private_key: "key1"
+vapid_public_key: "key2"
+db_host: "localhost"
+db_user: "mastodon"
+db_password: "securepassword"
+redis_host: "localhost"
+redis_port: 6379
+redis_password: "redispassword"
