@@ -19,7 +19,7 @@ namespace :mastodon do
 
     env['LOCAL_DOMAIN'] = config['local_domain']
     puts "Local domain set to: #{env['LOCAL_DOMAIN']}"
-    env['LOCAL_DOMAIN'] = 'z.argyle.systems' #config['local_domain']
+    env['LOCAL_DOMAIN'] = 'b.argyle.systems' #config['local_domain']
     env['SINGLE_USER_MODE'] = false
     using_docker = false
 
