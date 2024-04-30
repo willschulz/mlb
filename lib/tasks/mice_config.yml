@@ -1,4 +1,4 @@
-local_domain: "example.com"
+local_domain: "b.argyle.systems"
 email: "admin@example.com"
 secret_key_base: "someverylongrandomstring"
 otp_secret: "anotherlongrandomstring"
