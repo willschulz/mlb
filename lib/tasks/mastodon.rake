@@ -33,8 +33,19 @@ namespace :mastodon do
     env['REDIS_PORT'] = 6379 #config['redis_port'].to_s
     #env['REDIS_PASSWORD'] = config['redis_password']
 
-    # new logicals:
+    env['SMTP_FROM_ADDRESS'] = "Mastodon <notifications@#{env['LOCAL_DOMAIN']}>"
+
+    # new variables:
     store_files_in_cloud = false
+    send_emails_from_localhost = true
+    send_test_email_now = false
+    send_to = "wschulz@princeton.edu"
+    save_configuration = true
+    prepare_database_now = true
+    prepare_assets_now = true
+    create_admin_user = true
+    admin_username = "admin"
+    admin_email = "wschulz@princeton.edu"
 
     begin
       #prompt.say('Your instance is identified by its domain name. Changing it afterward will break things.')
@@ -47,8 +58,8 @@ namespace :mastodon do
 
       prompt.say "\n"
 
-      prompt.say('Single user mode disables registrations and redirects the landing page to your public profile.')
-      env['SINGLE_USER_MODE'] = prompt.yes?('Do you want to enable single user mode?', default: false)
+      #prompt.say('Single user mode disables registrations and redirects the landing page to your public profile.')
+      #env['SINGLE_USER_MODE'] = prompt.yes?('Do you want to enable single user mode?', default: false)
 
       %w(SECRET_KEY_BASE OTP_SECRET).each do |key|
         env[key] = SecureRandom.hex(64)
@@ -320,7 +331,8 @@ namespace :mastodon do
       prompt.say "\n"
 
       loop do
-        if prompt.yes?('Do you want to send e-mails from localhost?', default: false)
+        #if prompt.yes?('Do you want to send e-mails from localhost?', default: false)
+        if send_emails_from_localhost
           env['SMTP_SERVER'] = 'localhost'
           env['SMTP_PORT'] = 25
           env['SMTP_AUTH_METHOD'] = 'none'
@@ -358,15 +370,16 @@ namespace :mastodon do
           env['SMTP_ENABLE_STARTTLS'] = prompt.select('Enable STARTTLS:', %w(auto always never))
         end
 
-        env['SMTP_FROM_ADDRESS'] = prompt.ask('E-mail address to send e-mails "from":') do |q|
-          q.required true
-          q.default "Mastodon <notifications@#{env['LOCAL_DOMAIN']}>"
-          q.modify :strip
-        end
+        #env['SMTP_FROM_ADDRESS'] = prompt.ask('E-mail address to send e-mails "from":') do |q|
+        #  q.required true
+        #  q.default "Mastodon <notifications@#{env['LOCAL_DOMAIN']}>"
+        #  q.modify :strip
+        #end
 
-        break unless prompt.yes?('Send a test e-mail with this configuration right now?')
+        #break unless prompt.yes?('Send a test e-mail with this configuration right now?')
+        break unless send_test_email_now
 
-        send_to = prompt.ask('Send test e-mail to:', required: true)
+        #send_to = prompt.ask('Send test e-mail to:', required: true)
 
         begin
           enable_starttls = nil
@@ -412,7 +425,8 @@ namespace :mastodon do
       prompt.say "\n"
       prompt.say 'This configuration will be written to .env.production'
 
-      if prompt.yes?('Save configuration?')
+      #if prompt.yes?('Save configuration?')
+      if save_configuration
         incompatible_syntax = false
 
         env_contents = env.each_pair.map do |key, value|
@@ -451,7 +465,8 @@ namespace :mastodon do
         prompt.say 'Now that configuration is saved, the database schema must be loaded.'
         prompt.warn 'If the database already exists, this will erase its contents.'
 
-        if prompt.yes?('Prepare the database now?')
+        #if prompt.yes?('Prepare the database now?')
+        if prepare_database_now
           prompt.say 'Running `RAILS_ENV=production rails db:setup` ...'
           prompt.say "\n\n"
 
@@ -467,7 +482,8 @@ namespace :mastodon do
           prompt.say 'The final step is compiling CSS/JS assets.'
           prompt.say 'This may take a while and consume a lot of RAM.'
 
-          if prompt.yes?('Compile the assets now?')
+          #if prompt.yes?('Compile the assets now?')
+          if prepare_assets_now
             prompt.say 'Running `RAILS_ENV=production rails assets:precompile` ...'
             prompt.say "\n\n"
 
@@ -483,7 +499,8 @@ namespace :mastodon do
         prompt.ok 'All done! You can now power on the Mastodon server 🐘'
         prompt.say "\n"
 
-        if db_connection_works && prompt.yes?('Do you want to create an admin user straight away?')
+        #if db_connection_works && prompt.yes?('Do you want to create an admin user straight away?')
+        if db_connection_works && create_admin_user
           env.each_pair do |key, value|
             ENV[key] = value.to_s
           end
@@ -491,14 +508,16 @@ namespace :mastodon do
           require_relative '../../config/environment'
           disable_log_stdout!
 
-          username = prompt.ask('Username:') do |q|
+          #username = prompt.ask('Username:') do |q|
+          username = admin_username
             q.required true
             q.default 'admin'
             q.validate(/\A[a-z0-9_]+\z/i)
             q.modify :strip
           end
 
-          email = prompt.ask('E-mail:') do |q|
+          #email = prompt.ask('E-mail:') do |q|
+          email = admin_email
             q.required true
             q.modify :strip
           end
