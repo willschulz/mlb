@@ -28,7 +28,7 @@ gem 'active_model_serializers', '~> 0.10'
 gem 'addressable', '~> 2.8'
 gem 'bootsnap', '~> 1.13.0', require: false
 gem 'browser'
-gem 'charlock_holmes', '~> 0.7.7'
+gem 'charlock_holmes', '~> 0.7.8'
 gem 'chewy', '~> 7.2'
 gem 'devise', '~> 4.8'
 gem 'devise-two-factor', '~> 4.0'
